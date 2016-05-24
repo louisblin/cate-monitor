@@ -12,6 +12,10 @@ echo -e         "=====================================================\033[0m"
 # Installing dependencies
 echo
 echo    "Installing dependencies..."
+
+which brew >/dev/null 2>&1
+[[ $? -ne 0 ]] && echo "Please install Homebrew from http://brew.sh/" && exit 1
+
 brew install terminal-notifier
 brew install phantomjs
 
