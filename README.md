@@ -9,7 +9,11 @@ machines and uses the NSNotificationCenter to signal any update to the user.
 Running the following commands will download and set up *cate-monitor*
 
 ```shell
-git clone https://github.com/louisblin/cate-monitor
+git clone https://github.com/louisblin/cate-monitor.git
 cd cate-monitor
 bash bootstrap.sh
 ```
+
+## License 
+
+MIT
