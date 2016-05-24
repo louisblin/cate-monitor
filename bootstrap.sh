@@ -9,6 +9,12 @@ echo -e "\033[31m====================================================="
 echo -e         "| Bootstraping cate-monitor..."
 echo -e         "=====================================================\033[0m"
 
+# Installing dependencies
+echo
+echo    "Installing dependencies..."
+brew install terminal-notifier
+brew install phantomjs
+
 # Prompt data
 echo
 echo    "Creating the configuration file..."

@@ -4,6 +4,15 @@
 page at Imperial College. It is runs periodically as a crontab job on MAC OS
 machines and uses the NSNotificationCenter to signal any update to the user.
 
+## Dependencies
+
+Required before installing:
+- Homebrew: see http://brew.sh/ you don't have it
+
+Installed by bootstrap script (with Homebrew):
+- terminal-notifier
+- phantomjs
+
 ## Install
 
 Running the following commands will download and set up *cate-monitor*
