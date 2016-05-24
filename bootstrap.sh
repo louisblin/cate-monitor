@@ -50,12 +50,12 @@ echo    "Adding as a cronjob and let it run each minute."
 echo    "Check \`man crontab\` for more information."
 
 rm -f $cron_file
-if [[ -n `crontab -l | grep MAILTO` ]]; then # Disable automatic emails
+if [[ -z `crontab -l | grep MAILTO` ]]; then # Disable automatic emails
   echo 'MAILTO=""' > $cron_file
 fi
 
 crontab -l > $cron_file
-echo "* * * * *  "`pwd`"/$main_file >"`pwd`"/$log_file 2>&1" >> $cron_file
+echo "* * * * *  "\"`pwd`"/$main_file\" >"\"`pwd`"/$log_file\" 2>&1" >> $cron_file
 crontab $cron_file
 rm $cron_file
 
