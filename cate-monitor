@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/"
-url="https://cate.doc.ic.ac.uk/student.cgi?key=2015:c2:lb3214"
+url="https://cate.doc.ic.ac.uk/"
 out=$DIR"res/out.txt"
 cate_old_json=$DIR"res/cate.old.json"
 
