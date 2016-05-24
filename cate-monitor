@@ -2,8 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/"
 url="https://cate.doc.ic.ac.uk/"
-out=$DIR"res/out.txt"
-cate_old_json=$DIR"res/cate.old.json"
+out="$DIR""res/out.txt"
+cate_old_json="$DIR""res/cate.old.json"
 
 TERMINAL_NOTIFIER="/usr/local/bin/terminal-notifier"
 NOTIF_ARGS="-sender com.apple.Terminal \
@@ -12,7 +12,7 @@ NOTIF_ARGS="-sender com.apple.Terminal \
 
 PING="/sbin/ping"
 PHANTOMJS="/usr/local/bin/phantomjs"
-PHANTOM_FILE=$DIR"cate.js"
+PHANTOM_FILE="$DIR""cate.js"
 
 
 # starting cron job...
@@ -28,28 +28,28 @@ $PING -c 1 -t 1 google.com >/dev/null
 [[ $? -ne 0 ]] && exit
 
 # parse cate and update record
-$PHANTOMJS $PHANTOM_FILE > $out
-cat $out
+$PHANTOMJS "$PHANTOM_FILE" > "$out"
+cat "$out"
 
 # ignore new grades if no cate_old_json file (typically during first run)
-if [[ ! -e $cate_old_json ]]; then
-  echo "No file $cate_old_json, continue to next run..."
-  cat $out | head -n 1 > $cate_old_json
+if [[ ! -e "$cate_old_json" ]]; then
+  echo 'No file "$cate_old_json", continue to next run...'
+  cat "$out" | head -n 1 > "$cate_old_json"
   exit
 else
-  cat $out | head -n 1 > $cate_old_json
+  cat "$out" | head -n 1 > "$cate_old_json"
 fi
 
-cat $out | head -n 1 > $cate_old_json
-diff=`cat $out | tail -n +2`
+cat "$out" | head -n 1 > "$cate_old_json"
+diff=`cat "$out" | tail -n +2`
 echo
-echo $diff
+echo "$diff"
 
 # if new grades detected
 if [[ -n "$diff" ]]; then
 
   # for each new grade, send a notification
-  cat $out | tail -n +2 | while read g
+  cat "$out" | tail -n +2 | while read g
   do 
 
     echo "READ LNE $g"

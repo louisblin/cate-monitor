@@ -7,7 +7,7 @@ var config = './config.js'
 if (phantom.injectJs(config)) {
   page.settings.userName = config.user;
   page.settings.password = config.passw;
-  var cwd = config.cwd + "/"; 
+  var cwd = config.cwd + "/";
   url += "c" + config.year + ":" + config.user;
 }
 else {
@@ -53,7 +53,7 @@ page.open(url, function(status) {
       var cw = sub.grades[cw_key];
 
       // If new subject, or new coursework, or grade updtated... add to diff
-      if (!(sub_key in oldGrades.subjects && 
+      if (!(sub_key in oldGrades.subjects &&
             cw_key  in oldGrades.subjects[sub_key].grades)
          ||(cw.grade != oldGrades.subjects[sub_key].grades[cw_key].grade)) {
 
@@ -178,6 +178,7 @@ function parsePage(CateGrades, Subject, Grade) {
 function fetchOldGrades(file) {
 
   file = "file://" + cwd + file;
+  file = file.replace(/ /g, "\u0020"); // escaping spaces
 
   var content;
   var rawFile = new XMLHttpRequest();
@@ -189,6 +190,7 @@ function fetchOldGrades(file) {
           content = JSON.parse(rawFile.responseText);
         } catch (e) {
           console.log("JSON.parse() error: " + e);
+          console.log("in file: " + file);
           phantom.exit();
         }
       }
@@ -198,4 +200,3 @@ function fetchOldGrades(file) {
   rawFile.send(null);
   return content;
 }
-
