@@ -30,7 +30,7 @@ page.open(url, function(status) {
   // New Grades
   var newGrades;
 
-  if (page.injectJs("jquery.min.js")) {
+  if (page.injectJs("res/jquery.min.js")) {
 
     var json = page.evaluate(function(CateGrades, Subject, Grade, parsePage) {
         var cg = parsePage(CateGrades, Subject, Grade);
@@ -42,7 +42,7 @@ page.open(url, function(status) {
   }
 
   // Old Grades
-  var oldGrades = fetchOldGrades("cate.old.json");
+  var oldGrades = fetchOldGrades("res/cate.old.json");
 
   // Compute diff
   var diff = [];

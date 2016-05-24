@@ -1,5 +1,8 @@
+# Confidential logins that shouldn't be pushed online
 config.js
-cate.old.json*
-out.txt
+
+# Junks
+res/cate.old.json*
+res/out.txt
 log.txt
 cron

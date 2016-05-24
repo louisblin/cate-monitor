@@ -2,13 +2,13 @@
 
 DIR="/Users/louisblin/Cron/cate/"
 url="https://cate.doc.ic.ac.uk/student.cgi?key=2015:c2:lb3214"
-out=$DIR"out.txt"
-cate_old_json=$DIR"cate.old.json"
+out=$DIR"res/out.txt"
+cate_old_json=$DIR"res/cate.old.json"
 
 TERMINAL_NOTIFIER="/usr/local/bin/terminal-notifier"
 NOTIF_ARGS="-sender com.apple.Terminal \
             -sound default -open \"$url\" \
-            -appIcon cateIcon.gif"
+            -appIcon res/cateIcon.gif"
 
 PING="/sbin/ping"
 PHANTOMJS="/usr/local/bin/phantomjs"
