@@ -177,9 +177,6 @@ function parsePage(CateGrades, Subject, Grade) {
 
 function fetchOldGrades(file) {
 
-  file = "file://" + cwd + file;
-  file = file.replace(/ /g, "\u0020"); // escaping spaces
-
   var content;
   var rawFile = new XMLHttpRequest();
   rawFile.open("GET", file, false);
