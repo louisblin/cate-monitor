@@ -1,8 +1,9 @@
 # cate-monitor
 
-*cate-monitor* is a deamon program that monitors a Computing students grades 
-page at Imperial College. It is runs periodically as a crontab job on MAC OS
-machines and uses the NSNotificationCenter to signal any update to the user.
+*cate-monitor* is a deamon program that monitors the grades of a Computing 
+student at Imperial College London. It runs periodically as a crontab job on
+a MAC OS machine and uses the NSNotificationCenter to signal any update to the 
+user.
 
 ## Dependencies
 
