@@ -1,0 +1,67 @@
+#!/bin/bash
+
+DIR="/Users/louisblin/Cron/cate/"
+url="https://cate.doc.ic.ac.uk/student.cgi?key=2015:c2:lb3214"
+out=$DIR"out.txt"
+cate_old_json=$DIR"cate.old.json"
+
+TERMINAL_NOTIFIER="/usr/local/bin/terminal-notifier"
+NOTIF_ARGS="-sender com.apple.Terminal \
+            -sound default -open \"$url\" \
+            -appIcon cateIcon.gif"
+
+PING="/sbin/ping"
+PHANTOMJS="/usr/local/bin/phantomjs"
+PHANTOM_FILE=$DIR"cate.js"
+
+
+# starting cron job...
+date
+echo $PATH
+echo
+echo "Display unfinished phantomjs processes"
+ps aux | \grep phantom | \grep -v "grep"
+echo
+
+# abort if offline
+$PING -c 1 -t 1 google.com >/dev/null
+[[ $? -ne 0 ]] && exit
+
+# parse cate and update record
+$PHANTOMJS $PHANTOM_FILE > $out
+cat $out
+
+# ignore new grades if no cate_old_json file (typically during first run)
+if [[ ! -e $cate_old_json ]]; then
+  echo "No file $cate_old_json, continue to next run..."
+  cat $out | head -n 1 > $cate_old_json
+  exit
+else
+  cat $out | head -n 1 > $cate_old_json
+fi
+
+cat $out | head -n 1 > $cate_old_json
+diff=`cat $out | tail -n +2`
+echo
+echo $diff
+
+# if new grades detected
+if [[ -n "$diff" ]]; then
+
+  # for each new grade, send a notification
+  cat $out | tail -n +2 | while read g
+  do 
+
+    echo "READ LNE $g"
+    subject=`echo $g | \grep -o "^[^|]*"`
+    coursework=`echo $g | sed -n 's/.*||\([^|]*\)||.*/\1/p'`
+    grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
+
+    # send notif
+    $TERMINAL_NOTIFIER $NOTIF_ARGS \
+      -title "Cate grades update" \
+      -subtitle "$subject" \
+      -message "Got an $grade for $coursework"
+         
+  done
+fi
