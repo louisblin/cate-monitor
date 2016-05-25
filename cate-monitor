@@ -24,8 +24,8 @@ ps aux | \grep phantom | \grep -v "grep"
 echo
 
 # abort if offline
-$PING -c 1 -t 1 google.com >/dev/null
-[[ $? -ne 0 ]] && exit
+$PING -c 1 -t 1 google.com >/dev/null 2>&1
+[[ $? -ne 0 ]] && echo "Offline, abort." && exit 1
 
 # parse cate and update record
 $PHANTOMJS "$PHANTOM_FILE" > "$out"
