@@ -2,9 +2,7 @@
 config.js
 
 # Junks
+**.txt
 res/cate.old.json*
-res/out.txt
-log.txt
 cron
 .DS_Store
-

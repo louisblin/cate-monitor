@@ -30,7 +30,7 @@ echo -n "Cate username:          "
 read username
 
 echo -n "Cate password:          "
-read password
+read -s password
 
 # Creating config file
 rm -f $config_file
