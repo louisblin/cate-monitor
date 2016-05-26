@@ -125,55 +125,56 @@ function Grade(identifier, grade) {
  */
 function parsePage(CateGrades, Subject, Grade) {
 
-   var mainTable = $('table')[10];
-   var cells = mainTable.firstElementChild.children;
+  var mainTable = $("table[border]:has(tbody > tr > th):contains(Exercise)")
+    .filter("table:has(tbody > tr > td > b):contains(Total)")[0];
+  var cells = mainTable.firstElementChild.children;
 
-   // Iterate through all cells
-   var currSubject;
-   var cateGrades = new CateGrades();
+  // Iterate through all cells
+  var currSubject;
+  var cateGrades = new CateGrades();
 
-   $.each(cells, function( k, v ) {
-    //  console.log("elem " + k + " : " + v);
+  $.each(cells, function( k, v ) {
+   //  console.log("elem " + k + " : " + v);
 
-     if (!currSubject) {
-       var c = $(v).find("td[align=left]");
+    if (!currSubject) {
+      var c = $(v).find("td[align=left]");
 
-       // If we find a new subject
-       if (c.length > 0) {
-         var name = $(c).find("b")[0].innerText;
-         var sub = new Subject(name);
-         cateGrades.subjects[name] = sub;
-         currSubject = sub;
-       }
-     }
-     // Already in a subject
-     else {
-       var c = $(v).find("td");
+      // If we find a new subject
+      if (c.length > 0) {
+        var name = $(c).find("b")[0].innerText;
+        var sub = new Subject(name);
+        cateGrades.subjects[name] = sub;
+        currSubject = sub;
+      }
+    }
+    // Already in a subject
+    else {
+      var c = $(v).find("td");
 
-       // If we find a new coursework
-       if (c.length > 0) {
-         // Ignore
-         if ($(v).find("td[bgcolor!='white']").length > 2
-             || $(v).find("td").length < 8) {
-           // Skip cells of the form:
-           // - nearly no white cell (like group formations)
-           // - with 'no student interaction'
-         }
-         else {
-           var name  = $(v).find("td")[2].innerText;
-           var g     = $(v).find("td")[7].innerText;
-           var grade = new Grade(name, g);
-           currSubject.grades[name] = grade;
-         }
-       }
-       else {
-         currSubject = undefined;
-       }
-     }
-   });
+      // If we find a new coursework
+      if (c.length > 0) {
+        // Ignore
+        if ($(v).find("td[bgcolor!='white']").length > 2
+            || $(v).find("td").length < 8) {
+          // Skip cells of the form:
+          // - nearly no white cell (like group formations)
+          // - with 'no student interaction'
+        }
+        else {
+          var name  = $(v).find("td")[2].innerText;
+          var g     = $(v).find("td")[7].innerText;
+          var grade = new Grade(name, g);
+          currSubject.grades[name] = grade;
+        }
+      }
+      else {
+        currSubject = undefined;
+      }
+    }
+  });
 
-   return cateGrades;
- };
+  return cateGrades;
+};
 
 function fetchOldGrades(file) {
 
