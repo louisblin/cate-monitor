@@ -26,10 +26,10 @@ echo    "Creating the configuration file..."
 echo -n "Computing year [1/2/3]: "
 read year
 
-echo -n "Cate username:          "
+echo -n "Cate username: "
 read username
 
-echo -n "Cate password:          "
+echo -n "Cate password: "
 read -s password
 
 # Creating config file
@@ -46,11 +46,13 @@ chmod 600 $config_file  # rw------- config_file
 
 # Adding to crontab
 echo
+echo
 echo    "Adding as a cronjob and let it run each minute."
 echo    "Check \`man crontab\` for more information."
 
 rm -f $cron_file
-if [[ -z `crontab -l | grep MAILTO` ]]; then # Disable automatic emails
+# disable emails if no crontab or no MAILTO instruction provided
+if [[ -z `crontab -l 2>/dev/null | grep MAILTO` ]]; then 
   echo 'MAILTO=""' > $cron_file
 fi
 
