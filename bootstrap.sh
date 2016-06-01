@@ -56,7 +56,7 @@ if [[ -z `crontab -l 2>/dev/null | grep MAILTO` ]]; then
   echo 'MAILTO=""' > $cron_file
 fi
 
-crontab -l > $cron_file
+crontab -l >> $cron_file
 echo "* * * * *  "\"`pwd`"/$main_file\" >"\"`pwd`"/$log_file\" 2>&1" >> $cron_file
 crontab $cron_file
 rm $cron_file
