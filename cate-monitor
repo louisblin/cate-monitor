@@ -52,16 +52,20 @@ if [[ -n "$diff" ]]; then
   cat "$out" | tail -n +2 | while read g
   do 
 
-    echo "READ LNE $g"
+    echo "READ LINE $g"
     subject=`echo $g | \grep -o "^[^|]*"`
     coursework=`echo $g | sed -n 's/.*||\([^|]*\)||.*/\1/p'`
     grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
 
-    # send notif
-    $TERMINAL_NOTIFIER $NOTIF_ARGS \
-      -title "Cate grades update" \
-      -subtitle "$subject" \
-      -message "Got an $grade for $coursework"
-         
+    # send notification
+    if [ "$grade" != "n/a" ] && \
+       [ "$grade" != " " ] && \ 
+       [ "$grade" != "N/P" ]; then
+      $TERMINAL_NOTIFIER $NOTIF_ARGS \
+        -title "Cate grades update" \
+        -subtitle "$subject" \
+        -message "Got an $grade for $coursework"
+    fi
+           
   done
 fi
