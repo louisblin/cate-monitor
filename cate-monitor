@@ -58,7 +58,9 @@ if [[ -n "$diff" ]]; then
     grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
 
     # send notification
-    if [ $grade -ne "n/a" -o $grade -ne " " -o $grade -ne "N/P" ]; then
+    if [ "$grade" != "n/a" ] && \
+       [ "$grade" != " " ] && \ 
+       [ "$grade" != "N/P" ]; then
       $TERMINAL_NOTIFIER $NOTIF_ARGS \
         -title "Cate grades update" \
         -subtitle "$subject" \
