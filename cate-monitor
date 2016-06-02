@@ -59,7 +59,6 @@ if [[ -n "$diff" ]]; then
 
     # send notification
     if [ "$grade" != "n/a" ] && \
-       [ "$grade" != " " ] && \ 
        [ "$grade" != "N/P" ]; then
       $TERMINAL_NOTIFIER $NOTIF_ARGS \
         -title "Cate grades update" \
