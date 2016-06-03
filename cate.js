@@ -155,8 +155,8 @@ function parsePage(CateGrades, Subject, Grade) {
       if (c.length > 0) {
         // Ignore
         if ($(v).find("td[bgcolor!='white']").length > 2
-            || $(v).find("td").length < 8
-            || ! (($(v).find("td:last-child").innerText || "").trim()) ) {
+            || $(v).find("td").length < 8) {
+           // || ! (($(v).find("td:last-child").innerText || "").trim()) ) {
           // Skip cells of the form:
           // - nearly no white cell (like group formations)
           // - with 'no student interaction'
