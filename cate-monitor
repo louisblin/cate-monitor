@@ -14,13 +14,14 @@ PING="/sbin/ping"
 PHANTOMJS="/usr/local/bin/phantomjs"
 PHANTOM_FILE="$DIR""cate.js"
 
+# ----------
 
 # starting cron job...
 date
 echo $PATH
 echo
 echo "Display unfinished phantomjs processes"
-ps aux | \grep phantom | \grep -v "grep"
+ps aux | grep phantom | grep -v "grep"
 echo
 
 # abort if offline
@@ -52,9 +53,9 @@ if [[ -n "$diff" ]]; then
   cat "$out" | tail -n +2 | while read g
   do 
 
-    echo "READ LINE $g"
+    echo "[cate-monitor] process grade line $g"
     subject=`echo $g | \grep -o "^[^|]*"`
-    coursework=`echo $g | sed -n 's/.*||\([^|]*\)||.*/\1/p'`
+    coursework=`echo $g | sed -n 's/.*||[[:space:]]\([^|]*\)[[:space:]]||.*/\1/p'`
     grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
 
     # send notification
