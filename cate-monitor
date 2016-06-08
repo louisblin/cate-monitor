@@ -55,7 +55,7 @@ if [[ -n "$diff" ]]; then
 
     echo "[cate-monitor] process grade line $g"
     subject=`echo $g | \grep -o "^[^|]*"`
-    coursework=`echo $g | sed -n 's/.*||[[:space:]]\([^|]*\)[[:space:]]||.*/\1/p'`
+    coursework=`echo $g | sed -n 's/.*||[[:space:]]*\([^|]*\)[[:space:]]*||.*/\1/p'`
     grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
 
     # send notification
