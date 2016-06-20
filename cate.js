@@ -4,6 +4,12 @@ var page = require('webpage').create();
 var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2015:';
 var config = './config.js'
 
+// Timeout settings
+page.settings.resourceTimeout = 30000;  // 30 seconds
+page.onResourceTimeout = function(e) {
+    phantom.exit(1);
+}
+
 if (phantom.injectJs(config)) {
   page.settings.userName = config.user;
   page.settings.password = config.passw;
@@ -24,7 +30,7 @@ page.open(url, function(status) {
 
   if (status != "success") {
     console.log("[" + status + "]");
-    exit();
+    phantom.exit();
   }
 
   // New Grades
@@ -116,7 +122,7 @@ function Grade(identifier, grade) {
   this.grade = grade;
 
   this.to_json = function () {
-    return JSON.stringify(this)
+    return JSON.stringify(this);
   }
 };
 
@@ -141,7 +147,7 @@ function parsePage(CateGrades, Subject, Grade) {
 
       // If we find a new subject
       if (c.length > 0) {
-        var name = $(c).find("b")[0].innerText;
+        var name = $(c).find("b")[0].innerText.trim();
         var sub = new Subject(name);
         cateGrades.subjects[name] = sub;
         currSubject = sub;
@@ -164,7 +170,7 @@ function parsePage(CateGrades, Subject, Grade) {
           // - innerText only contains blanks
         }
         else {
-          var name  = $(v).find("td")[2].innerText;
+          var name  = $(v).find("td")[2].innerText.trim();
           var g     = $(v).find("td")[7].innerText.trim();
           var grade = new Grade(name, g);
           currSubject.grades[name] = grade;

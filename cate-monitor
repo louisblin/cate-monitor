@@ -25,11 +25,17 @@ ps aux | grep phantom | grep -v "grep"
 echo
 
 # abort if offline
-$PING -c 1 -t 1 google.com >/dev/null 2>&1
-[[ $? -ne 0 ]] && echo "Offline, abort." && exit 1
+has_internet_connection() {
+  # function nesting to suppress Alarm Clock:14 on SIGALARM caused by -t 1
+  results=`$PING -c 1 -t 1 google.com >/dev/null 2>&1`
+  echo $?
+}
+[[ `has_internet_connection` -ne 0 ]] && echo "Offline, abort." && exit 1
 
 # parse cate and update record
 $PHANTOMJS "$PHANTOM_FILE" > "$out"
+[[ $? -ne 0 ]] && echo "PhantomJS page load timeout, abort." && exit 1
+
 cat "$out"
 
 # ignore new grades if no cate_old_json file (typically during first run)
@@ -51,12 +57,12 @@ if [[ -n "$diff" ]]; then
 
   # for each new grade, send a notification
   cat "$out" | tail -n +2 | while read g
-  do 
+  do
 
     echo "[cate-monitor] process grade line $g"
-    subject=`echo $g | \grep -o "^[^|]*"`
-    coursework=`echo $g | sed -n 's/.*||[[:space:]]*\([^|]*\)[[:space:]]*||.*/\1/p'`
-    grade=`echo $g | sed -n 's/.*||\([^|]*\)$/\1/p'`
+    subject=`   echo $g | grep -o '^[^|]*'`
+    coursework=`echo $g | sed  -n 's/.*||\([^|]*\)||.*/\1/p'`
+    grade=`     echo $g | grep -o '[^|]*$'`
 
     # send notification
     if [ "$grade" != "n/a" ] && \
@@ -66,6 +72,6 @@ if [[ -n "$diff" ]]; then
         -subtitle "$subject" \
         -message "Got an $grade for $coursework"
     fi
-           
+
   done
 fi
