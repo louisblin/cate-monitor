@@ -1,7 +1,7 @@
 var page = require('webpage').create();
 
-//NB: change this url for other academic years (> 2015-2016)
-var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2015:';
+//NB: change this url for other academic years (> 2016-2017)
+var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2016:';
 var config = './config.js'
 
 // Timeout settings
