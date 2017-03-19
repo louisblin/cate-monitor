@@ -18,7 +18,7 @@ if (phantom.injectJs(config)) {
 }
 else {
   console.log("Error injecting config. Missing " + config + " file");
-  phantom.exit();
+  phantom.exit(1);
 }
 
 // Display all console messages
@@ -30,7 +30,7 @@ page.open(url, function(status) {
 
   if (status != "success") {
     console.log("[" + status + "]");
-    phantom.exit();
+    phantom.exit(1);
   }
 
   // New Grades
@@ -198,7 +198,7 @@ function fetchOldGrades(file) {
         } catch (e) {
           console.log("JSON.parse() error: " + e);
           console.log("in file: " + file);
-          phantom.exit();
+          phantom.exit(1);
         }
       }
     }

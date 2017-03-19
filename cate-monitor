@@ -11,6 +11,7 @@ NOTIF_ARGS="-sender com.apple.Terminal \
             -appIcon res/cateIcon.gif"
 
 PING="/sbin/ping"
+TIMEOUT="/usr/local/bin/gtimeout"
 PHANTOMJS="/usr/local/bin/phantomjs"
 PHANTOM_FILE="$DIR""cate.js"
 
@@ -32,8 +33,8 @@ has_internet_connection() {
 }
 [[ `has_internet_connection` -ne 0 ]] && echo "Offline, abort." && exit 1
 
-# parse cate and update record
-$PHANTOMJS "$PHANTOM_FILE" > "$out"
+# parse cate and update record, 45sec timeout
+$TIMEOUT --signal=SIGINT 45 $PHANTOMJS "$PHANTOM_FILE" > "$out"
 [[ $? -ne 0 ]] && echo "PhantomJS page load timeout, abort." && exit 1
 
 cat "$out"
