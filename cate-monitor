@@ -69,9 +69,9 @@ if [[ -n "$diff" ]]; then
     if [ "$grade" != "n/a" ] && \
        [ "$grade" != "N/P" ]; then
       $TERMINAL_NOTIFIER $NOTIF_ARGS \
-        -title "Cate grades update" \
-        -subtitle "$subject" \
-        -message "Got an $grade for $coursework"
+        -title "CATe – $subject" \
+        -subtitle "$coursework" \
+        -message "$grade"
     fi
 
   done
