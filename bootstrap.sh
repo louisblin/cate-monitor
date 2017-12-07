@@ -23,9 +23,6 @@ brew install phantomjs
 echo
 echo    "Creating the configuration file..."
 
-echo -n "Computing year [1/2/3]: "
-read year
-
 echo -n "Cate username: "
 read username
 
@@ -36,7 +33,6 @@ read -s password
 rm -f $config_file
 
 echo "var config = {"           >> $config_file
-echo "  year:  '"$year"',"      >> $config_file
 echo "  user:  '"$username"',"  >> $config_file
 echo "  passw: '"$password"',"  >> $config_file
 echo "  cwd:   '"`pwd`"'"       >> $config_file

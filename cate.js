@@ -1,7 +1,8 @@
+'use strict'
+
 var page = require('webpage').create();
 
-//NB: change this url for other academic years (> 2016-2017)
-var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2016:';
+var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2017:';
 var config = './config.js'
 
 // Timeout settings
@@ -14,7 +15,7 @@ if (phantom.injectJs(config)) {
   page.settings.userName = config.user;
   page.settings.password = config.passw;
   var cwd = config.cwd + "/";
-  url += "c" + config.year + ":" + config.user;
+  url += config.user;
 }
 else {
   console.log("Error injecting config. Missing " + config + " file");
@@ -50,20 +51,23 @@ page.open(url, function(status) {
   // Old Grades
   var oldGrades = fetchOldGrades("res/cate.old.json");
 
-  // Compute diff
-  var diff = [];
-  for (var sub_key in newGrades.subjects) {
-    var sub = newGrades.subjects[sub_key];
+  // If old file exists, otherwise skip step
+  if (oldGrades.subjects) {
+    // Compute diff
+    var diff = [];
+    for (var sub_key in newGrades.subjects) {
+      var sub = newGrades.subjects[sub_key];
 
-    for (var cw_key in sub.grades) {
-      var cw = sub.grades[cw_key];
+      for (var cw_key in sub.grades) {
+        var cw = sub.grades[cw_key];
 
-      // If new subject, or new coursework, or grade updtated... add to diff
-      if (!(sub_key in oldGrades.subjects &&
-            cw_key  in oldGrades.subjects[sub_key].grades)
-         ||(cw.grade != oldGrades.subjects[sub_key].grades[cw_key].grade)) {
+        // If new subject, or new coursework, or grade updtated... add to diff
+        if (!(sub_key in oldGrades.subjects) ||
+            !(cw_key  in oldGrades.subjects[sub_key].grades) ||
+             (cw.grade != oldGrades.subjects[sub_key].grades[cw_key].grade)) {
 
-        diff.push({sub: sub.name, cw: cw.identifier, grade: cw.grade});
+          diff.push({sub: sub.name, cw: cw.identifier, grade: cw.grade});
+        }
       }
     }
   }
@@ -140,7 +144,7 @@ function parsePage(CateGrades, Subject, Grade) {
   var cateGrades = new CateGrades();
 
   $.each(cells, function( k, v ) {
-   //  console.log("elem " + k + " : " + v);
+    // console.log("elem " + k + " : " + v);
 
     if (!currSubject) {
       var c = $(v).find("td[align=left]");
@@ -163,7 +167,7 @@ function parsePage(CateGrades, Subject, Grade) {
         // Ignore cells of the form...
         if ($(v).find("td[bgcolor!='white']").length > 2 ||
             $(v).find("td").length < 8 ||
-            !((v.lastChild.innerText || "").trim()) ) {
+            !((v.lastChild.previousSibling.innerText || "").trim()) ) { // Where the grade is
           // Skip cells of the form:
           // - nearly no white cell (like group formations)
           // - with 'no student interaction'
@@ -187,23 +191,22 @@ function parsePage(CateGrades, Subject, Grade) {
 
 function fetchOldGrades(file) {
 
-  var content;
-  var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", file, false);
-  rawFile.onreadystatechange = function () {
-    if(rawFile.readyState === 4) {
-      if(rawFile.status === 200 || rawFile.status == 0) {
-        try {
-          content = JSON.parse(rawFile.responseText);
-        } catch (e) {
-          console.log("JSON.parse() error: " + e);
-          console.log("in file: " + file);
-          phantom.exit(1);
-        }
-      }
-    }
+  var fs = require('fs'),
+      system = require('system');
+
+  var content = {},
+      f = null;
+
+  try {
+      f = fs.open(file, "r");
+      content = f.read();
+  } catch (e) {
+      console.log(e);
   }
 
-  rawFile.send(null);
+  if (f) {
+      f.close();
+  }
+
   return content;
 }
