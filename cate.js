@@ -49,7 +49,7 @@ page.open(url, function(status) {
   }
 
   // Old Grades
-  var oldGrades = fetchOldGrades("res/cate.old.json");
+  var oldGrades = JSON.parse(fetchOldGrades("res/cate.old.json"));
 
   // If old file exists, otherwise skip step
   if (oldGrades.subjects) {

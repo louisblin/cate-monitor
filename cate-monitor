@@ -51,7 +51,10 @@ fi
 cat "$out" | head -n 1 > "$cate_old_json"
 diff=`cat "$out" | tail -n +2`
 echo
+echo "Diff"
+echo "----"
 echo "$diff"
+echo "----"
 
 # if new grades detected
 if [[ -n "$diff" ]]; then
