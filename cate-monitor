@@ -44,8 +44,6 @@ if [[ ! -e "$cate_old_json" ]]; then
   echo 'No file "$cate_old_json", continue to next run...'
   cat "$out" | head -n 1 > "$cate_old_json"
   exit
-else
-  cat "$out" | head -n 1 > "$cate_old_json"
 fi
 
 cat "$out" | head -n 1 > "$cate_old_json"
