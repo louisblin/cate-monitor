@@ -2,7 +2,7 @@
 
 var page = require('webpage').create();
 
-var url    = 'https://cate.doc.ic.ac.uk/student.cgi?key=2017:';
+var url    = 'https://cate.doc.ic.ac.uk/student.cgi';
 var config = './config.js'
 
 // Timeout settings
@@ -14,8 +14,11 @@ page.onResourceTimeout = function(e) {
 if (phantom.injectJs(config)) {
   page.settings.userName = config.user;
   page.settings.password = config.passw;
-  var cwd = config.cwd + "/";
-  url += config.user;
+
+  // Get school year: [October_{n}, September_{n+1}]
+  var now  = new Date();
+  var year = now.getUTCFullYear() - (now.getUTCMonth() < 10 ? 1 : 0);
+  url += '?key=' + year + ':' + config.user;
 }
 else {
   console.log("Error injecting config. Missing " + config + " file");
