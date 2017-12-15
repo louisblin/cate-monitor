@@ -13,6 +13,7 @@ Required before installing:
 Installed by bootstrapping script (with Homebrew):
 - terminal-notifier
 - phantomjs
+- coreutils
 
 ## Install
 

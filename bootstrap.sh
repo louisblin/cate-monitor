@@ -16,8 +16,7 @@ echo    "Installing dependencies..."
 which brew >/dev/null 2>&1
 [[ $? -ne 0 ]] && echo "Please install Homebrew from http://brew.sh/" && exit 1
 
-brew install terminal-notifier
-brew install phantomjs
+#brew install terminal-notifier phantomjs coreutils
 
 # Prompt data
 echo
@@ -53,7 +52,7 @@ if [[ -z `crontab -l 2>/dev/null | grep MAILTO` ]]; then
 fi
 
 crontab -l >> $cron_file
-echo "* * * * *  "\"`pwd`"/$main_file\" >"\"`pwd`"/$log_file\" 2>&1" >> $cron_file
+echo "*/5 * * * *  cd \"`pwd`\" && ./$main_file >\"$log_file\" 2>&1" >> $cron_file
 crontab $cron_file
 rm $cron_file
 
