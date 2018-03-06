@@ -52,7 +52,7 @@ if [[ -z `crontab -l 2>/dev/null | grep MAILTO` ]]; then
 fi
 
 crontab -l >> $cron_file
-echo "*/5 * * * *  cd \"`pwd`\" && ./$main_file >\"$log_file\" 2>&1" >> $cron_file
+echo "* * * * * cd \"`pwd`\" && ./$main_file >\"$log_file\" 2>&1" >> $cron_file
 crontab $cron_file
 rm $cron_file
 
