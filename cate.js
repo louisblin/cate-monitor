@@ -197,19 +197,17 @@ function fetchOldGrades(file) {
   var fs = require('fs'),
       system = require('system');
 
-  var content = {},
-      f = null;
+  var f = null;
 
   try {
       f = fs.open(file, "r");
-      content = f.read();
+      return f.read();
   } catch (e) {
       console.log(e);
-  }
-
-  if (f) {
+      phantom.exit(0);
+  } finally {
+    if (f) {
       f.close();
+    }
   }
-
-  return content;
 }

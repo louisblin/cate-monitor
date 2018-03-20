@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/"
 url="https://cate.doc.ic.ac.uk/"
 out="$DIR""res/out.txt"
@@ -12,7 +14,7 @@ NOTIF_ARGS="-sender com.apple.Terminal \
 
 PING="/sbin/ping"
 TIMEOUT="/usr/local/bin/gtimeout"
-PHANTOMJS="/usr/local/bin/phantomjs"
+PHANTOMJS="/usr/local/bin/phantomjs --debug=true "
 PHANTOM_FILE="$DIR""cate.js"
 
 # ----------
