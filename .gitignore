@@ -1,8 +1,12 @@
-# Confidential logins that shouldn't be pushed online
-config.js
+# Credentials file - should NEVER be pushed
+**/config.json
 
-# Junks
-**.txt
-res/cate.old.json*
-cron
-.DS_Store
+# App cache
+**/cate.old.json
+
+# Node
+node_modules
+*.log
+
+# More unwanted
+*.txt
