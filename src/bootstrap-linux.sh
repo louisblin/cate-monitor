@@ -72,7 +72,7 @@ function init_crontab {
 
 # Skip if file exists
 if [[ "$do_bootstrap" = true || "$do_override" = true ]]; then
-  install_dependencies
+  #install_dependencies
   init_config
   init_crontab
 fi
