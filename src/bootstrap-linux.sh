@@ -5,8 +5,8 @@ config_file="$DIR""/../data/config.json"
 cron_file='cron'
 
 
-[ -e $config_file ] && do_bootstrap=false || do_bootstrap=true
-[ "$1" != "--override" ] && do_override=false || do_override=true
+[[ -e $config_file || ! -z $CATE_TESTING ]] && do_bootstrap=false || do_bootstrap=true
+[[ "$1" != "--override" ]] && do_override=false || do_override=true
 
 function install_dependencies {
     # Check dependencies
