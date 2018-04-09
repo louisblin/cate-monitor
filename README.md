@@ -1,5 +1,7 @@
 # cate-monitor
 
+[![Build Status](https://travis-ci.org/louisblin/cate-monitor.svg?branch=master)](https://travis-ci.org/louisblin/cate-monitor)
+
 *cate-monitor* monitors the grades of a Computing student at Imperial College
 London. It runs periodically as a crontab job and notifies the user of any grade
 update.
