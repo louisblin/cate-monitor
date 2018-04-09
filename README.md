@@ -1,32 +1,31 @@
 # cate-monitor
 
-*cate-monitor* is a deamon program that monitors the grades of a Computing 
-student at Imperial College London. It runs periodically as a crontab job on
-a MAC OS machine and uses the NSNotificationCenter to signal any update to the 
-user.
+[![Build Status](https://travis-ci.org/louisblin/cate-monitor.svg?branch=master)](https://travis-ci.org/louisblin/cate-monitor)
+
+*cate-monitor* monitors the grades of a Computing student at Imperial College
+London. It runs periodically as a crontab job and notifies the user of any grade
+update.
 
 ## Dependencies
 
-Required before installing:
-- Homebrew: see http://brew.sh/ if you don't have it.
+Depends on `node` and `yarn`, recommended way for install is with Homebrew (see
+http://brew.sh is you don't have it):
 
-Installed by bootstrapping script (with Homebrew):
-- terminal-notifier
-- phantomjs
-- coreutils
+```shell
+brew install node yarn
+```
 
 ## Install
 
-Running the following commands will download and set up *cate-monitor*. The 
-bootstrapping script (last command) will interactively prompt you for your 
-Cate logins and create the required `config.js`.
+Clone and run. The install can take a few minutes depending on your internet
+connection, as it needs to download ~250MB of dependencies. Also node that the
+postinstall step will interactively prompt you for your CATE logins and store
+them in `src/config.json`.
 
 ```shell
-git clone https://github.com/louisblin/cate-monitor.git
-cd cate-monitor
-bash bootstrap.sh
+yarn install
 ```
 
-## License 
+## License
 
 MIT
