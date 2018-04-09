@@ -10,3 +10,4 @@ node_modules
 
 # More unwanted
 *.txt
+**/.DS_Store

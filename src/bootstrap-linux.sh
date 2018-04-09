@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-config_file="$DIR""/../src/config.json"
+config_file="$DIR""/../data/config.json"
 cron_file='cron'
 
 

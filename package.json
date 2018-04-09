@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "postinstall": "./src/bootstrap-linux.sh",
+    "login": "./src/bootstrap-linux.sh --override",
     "start": "node src/index.js",
     "test": "jest"
   },
@@ -17,7 +18,7 @@
   ],
   "author": "Louis Blin",
   "engines": {
-    "node": ">=6.4.0",
+    "node": ">=8.0.0",
     "yarn": "^1.0.0"
   },
   "license": "MIT",

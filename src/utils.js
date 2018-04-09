@@ -1,16 +1,18 @@
 var fs = require('fs');
 var notifier = require('node-notifier');
 
-(function() {
-  module.exports.getUrl = function(url) {
+const PATH_CATE_ICON = __dirname + '/../data/cateIcon.gif';
+
+
+(() => {
+  module.exports.getUrl = url => {
     // Get school year: [October_{n}, September_{n+1}]
-    var url = 'https://cate.doc.ic.ac.uk/student.cgi';
     var now = new Date();
     var year = now.getUTCFullYear() - (now.getUTCMonth() < 10 ? 1 : 0);
     return url + '?key=' + year;
   },
-  
-  module.exports.readJSONFile = function(filepath) {
+
+  module.exports.readJSONFile = filepath => {
     try {
       return JSON.parse(fs.readFileSync(filepath, 'utf8'));
     } catch (err) {
@@ -22,7 +24,7 @@ var notifier = require('node-notifier');
     }
   },
 
-  module.exports.writeJSONFile = function(filepath, data) {
+  module.exports.writeJSONFile = (filepath, data) => {
     fs.writeFile(filepath, JSON.stringify(data), function(err) {
       if (err) {
         throw err;
@@ -30,12 +32,12 @@ var notifier = require('node-notifier');
     });
   },
 
-  module.exports.sendNotification = function(coursework, url, icon) {
+  module.exports.sendNotification = (coursework, url) => {
     notifier.notify({
       title: coursework.sub,
       subtitle: coursework.cw,
       message: coursework.grade + ' - click to see on CATE',
-      icon: icon,
+      icon: PATH_CATE_ICON,
       open: url,
       timeout: 10,
       // closeLabel: 'Dismiss',
@@ -43,8 +45,8 @@ var notifier = require('node-notifier');
     });
   },
 
-  module.exports.exit = function(msg, code = 1) {
+  module.exports.exit = (msg, code = 1) => {
     console.error(msg);
     process.exit(code);
   }
-}());
+})();
