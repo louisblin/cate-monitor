@@ -1,6 +1,12 @@
+sudo: required
+
 language: node_js
 node_js:
+  - "node"
   - "8"
+
+addons:
+  chrome: stable
 
 env:
   - CATE_TESTING=1
