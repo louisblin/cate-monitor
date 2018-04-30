@@ -178,6 +178,7 @@ async function main(cate_url, path_config, path_grades) {
 
     // Notify user of new grades
     for (let key in diff) {
+      console.info(`Send notification for ${JSON.stringify(diff[key])}`);
       utils.sendNotification(diff[key], cate_url);
     }
 
