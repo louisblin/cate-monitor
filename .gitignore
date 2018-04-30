@@ -9,5 +9,6 @@ node_modules
 *.log
 
 # More unwanted
+logs
 *.txt
 **/.DS_Store

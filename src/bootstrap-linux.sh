@@ -34,7 +34,7 @@ function init_config {
     echo -n "Imperial password: "
     read -s password
 
-    echo '{'                            >> "$config_file"
+    echo '{'                            >  "$config_file"
     echo '  "username": "'$username'",' >> "$config_file"
     echo '  "password": "'$password'"'  >> "$config_file"
     echo '}'                            >> "$config_file"
@@ -44,7 +44,7 @@ function init_config {
 }
 
 function cron_cmd {
-    echo "export PATH=\$PATH:`dirname $(which $1)` && $1"
+    echo "export PATH=\$PATH:`dirname $(which $1)` LOG=\"logs/log-\`date '+%Y-%m-%d-%Hh%M'\`.txt\" && $1"
 }
 
 function init_crontab {
@@ -63,7 +63,7 @@ function init_crontab {
     sentinel='cate-monitor-crontab'
     crontab -l | grep -v "$sentinel" >> "$cron_file"
 
-    echo "* * * * * cd \"$DIR/..\" && `cron_cmd yarn` start # $sentinel" >> "$cron_file"
+    echo "* * * * * cd \"$DIR/..\" && mkdir -p logs && `cron_cmd yarn` start 2>\"\$LOG\" >\"\$LOG\" && rm -f \"\$LOG\" # $sentinel" >> "$cron_file"
 
     crontab "$cron_file"
     rm "$cron_file"
