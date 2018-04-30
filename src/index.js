@@ -7,5 +7,5 @@ const { CATE_URL, CATE_CONFIG, CATE_GRADES } = process.env;
 return app.main(
   CATE_URL, CATE_CONFIG, CATE_GRADES
 ).catch(err =>
-  utils.exit(err)
+  await utils.exit(err)
 );

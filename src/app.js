@@ -150,7 +150,7 @@ async function main(cate_url, path_config, path_grades) {
     const http_code = response.status();
     switch (http_code) {
       case 401:
-        utils.exit(`Querying ${cate_url}: credentials don't match`);
+        await utils.exit(`Querying ${cate_url}: credentials don't match`);
       case 200:
         // HTTP protol returns 200 on success
         break;
@@ -160,7 +160,7 @@ async function main(cate_url, path_config, path_grades) {
           break;
         }
       default:
-        utils.exit(`Querying ${cate_url} returned with ${http_code}`);
+        await utils.exit(`Querying ${cate_url} returned with ${http_code}`);
     }
     console.info(`Return with http_code '${http_code}'`);
 

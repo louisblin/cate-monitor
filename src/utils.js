@@ -1,5 +1,9 @@
 var fs = require('fs');
 var notifier = require('node-notifier');
+var Raven = require('raven');
+
+// Logging
+Raven.config('https://ac39791e426c42f99455ab457209abaa@sentry.io/1198641').install();
 
 const PATH_CATE_ICON = __dirname + '/../data/cateIcon.gif';
 
@@ -45,8 +49,13 @@ const PATH_CATE_ICON = __dirname + '/../data/cateIcon.gif';
     });
   },
 
-  module.exports.exit = (msg, code = 1) => {
+  module.exports.exit = async (msg, code = 1) => {
     console.error(msg);
+
+    // Await for message to be sent...
+    Raven.captureException(msg);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     process.exit(code);
   }
 })();
