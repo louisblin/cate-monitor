@@ -1,11 +1,11 @@
-var app = require("./app");
-var utils = require("./utils")
+import app from './app';
+import utils from './utils';
 
 const { CATE_URL, CATE_CONFIG, CATE_GRADES } = process.env;
 
 
-return app.main(
+app.main(
   CATE_URL, CATE_CONFIG, CATE_GRADES
-).catch(err =>
+).catch(async err =>
   await utils.exit(err)
 );
