@@ -1,4 +1,4 @@
-import app  from '../src/app';
+import app  from '../js/app';
 import puppeteer from "puppeteer";
 
 const MINIMAL_GRADES = {

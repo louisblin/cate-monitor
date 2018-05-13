@@ -2,11 +2,11 @@
   "name": "cate-monitor",
   "version": "1.0.0",
   "description": "A tool to let Imperial College Computing students monitor their grades from CATE",
-  "main": "src/index.js",
+  "main": "js/index.js",
   "scripts": {
-    "postinstall": "./src/bootstrap-linux.sh",
-    "login": "./src/bootstrap-linux.sh --override",
-    "start": "babel-node src/index.js" ,
+    "postinstall": "./scripts/bootstrap-linux.sh",
+    "login": "./scripts/bootstrap-linux.sh --override",
+    "start": "babel-node js/index.js" ,
     "test": "jest"
   },
   "repository": "github:louisblin/cate-monitor",
@@ -43,7 +43,7 @@
   "jest": {
     "moduleDirectories": [
       "node_modules",
-      "src"
+      "js"
     ]
   }
 }

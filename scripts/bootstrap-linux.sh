@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 config_file="$DIR""/../data/config.json"
@@ -7,21 +7,6 @@ cron_file='cron'
 
 [[ -e $config_file || ! -z $CATE_TESTING ]] && do_bootstrap=false || do_bootstrap=true
 [[ "$1" != "--override" ]] && do_override=false || do_override=true
-
-function install_dependencies {
-    # Check dependencies
-    echo    "Checking for brew..."
-    which -s brew 2>&1 >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-    echo    "Checking for node..."
-    which -s node 2>&1 >/dev/null || brew install node
-
-    echo    "Checking for yarn..."
-    which -s yarn 2>&1 >/dev/null || brew install yarn
-
-    # Install npm dependencies
-    cd "$DIR""/.." && yarn install ; cd -
-}
 
 function init_config {
     # Configuration file
@@ -71,8 +56,7 @@ function init_crontab {
 
 
 # Skip if file exists
-if [[ "$do_bootstrap" = true || "$do_override" = true ]]; then
-  #install_dependencies
+if [[ "$do_bootstrap" == true || "$do_override" == true ]]; then
   init_config
   init_crontab
 fi
