@@ -1,0 +1,5 @@
+# Credentials file - should NEVER be pushed
+**/config.json
+
+# App cache
+**/cate.old.json
