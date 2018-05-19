@@ -131,7 +131,7 @@ export async function main(cate_url, path_config, path_grades) {
   path_grades = path_grades || DEFAULT_PATH_GRADES;
 
   // Load config
-  const config = utils.readJSONFile(path_config);
+  const credentials = await utils.getCredentials(path_config);
 
   // Perform request
   const browser = await puppeteer.launch({
@@ -141,7 +141,7 @@ export async function main(cate_url, path_config, path_grades) {
 
   try {
     const page = await browser.newPage();
-    await page.authenticate(config);
+    await page.authenticate(credentials);
     // Catch network failure
     // Catch file not found
     console.info(`Querying at URL '${cate_url}'`);

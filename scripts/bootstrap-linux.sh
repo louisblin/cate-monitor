@@ -8,6 +8,10 @@ cron_file='cron'
 [[ -e $config_file || ! -z $CATE_TESTING ]] && do_bootstrap=false || do_bootstrap=true
 [[ "$1" != "--override" ]] && do_override=false || do_override=true
 
+function is_darwin {
+  [[ `uname -s` == "Darwin" ]] && return 0 || return 1
+}
+
 function init_config {
     # Configuration file
     echo
@@ -16,8 +20,19 @@ function init_config {
     echo -n "Imperial username: "
     read username
 
-    echo -n "Imperial password: "
-    read -s password
+    if is_darwin; then
+      echo -n "Imperial password (stored in keychain): "
+      read -s password
+
+      echo -n "saving..."
+      ( cd "$DIR/.." && yarn run babel-node -e "require('./js/utils').saveCredentials('$username', '$password');" ; cd - ) &>/dev/null || exit $?
+      echo "done"
+
+      password="keychain"
+    else
+      echo -n "Imperial password: "
+      read -s password
+    fi
 
     echo '{'                            >  "$config_file"
     echo '  "username": "'$username'",' >> "$config_file"
